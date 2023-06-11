@@ -23,7 +23,6 @@ $(document).ready(function() {
   $(document).on("click", "#pagination a", function(e) {
     e.preventDefault();
     var page_id = $(this).attr("id");
-
     loadBook(page_id);
   });
 
@@ -33,22 +32,22 @@ $(document).ready(function() {
    *  @param string sortBy
    *    Hold how to sort data. 
    */
-  function sortBook(sortBy) {
+  function sortBook(sort) {
     $.ajax({
-      url: "home/sortBook",
+      url: "/home/sortBook",
       type: "POST",
-      data: {sortBy :sortBy},
+      data: {sortBy :sort},
       success: function(data) {
         $("#booklist").html(data);
       }
     });
   }
 
-  $(document).on("click", "#sort select", function(e) {
-    e.preventDefault();
-    var sort_option = $(this).attr("id");
-
-    sortBook(sort_option);
+  // It will work when the element change on selection.
+  $(document).on("change", "#sort", function() {
+    $(this).find(":selected").attr("id");
+    var value = $("#sort").val();
+    sortBook(value);
   });
 
   /**
@@ -56,22 +55,25 @@ $(document).ready(function() {
    * 
    *  @param string searchBy
    *    Hold how to search book. 
+   * 
+   *  @param string searchIn
+   *    Hold the value of column to be searched in.
    */
-  function searchBook(searchBy) {
+  function searchBook(searchBy, searchIn) {
     $.ajax({
-      url: "home/searchBook",
+      url: "/home/searchBook",
       type: "POST",
-      data: {bookQuery: searchBy},
+      data: {searchFor: searchBy, searchColumn: searchIn},
       success: function(data) {
         $("#booklist").html(data);
       }
     });
   }
 
-  $(document).on("click", "#search-bar input", function(e) {
-    e.preventDefault();
-    var search_option = $(this).attr("id");
-
-    searchBook(search_option);
+  // This event will occur while text is being typed in search box.
+  $(document).on("keyup", "#search-box", function() {
+    var searchIn = $("#search-in").val();
+    var search = $("#search-box").val();
+    searchBook(search, searchIn);
   });
 });

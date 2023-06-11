@@ -131,7 +131,7 @@ a {
   text-align: center;
 }
 
-.back-btn {
+.back-btn, #sort-btn a, #search-bar a {
   display: inline-block;
   color: white;
   background-color: #ff554f;
@@ -243,6 +243,11 @@ a {
 .book-details h4 {
   font-weight: normal;
   margin: 3px 0;
+  overflow: auto;
+}
+
+.book-details h4::-webkit-scrollbar {
+  display: none;
 }
 
 audio {
@@ -274,3 +279,4 @@ audio {
   color: white;
   background-color: #ff554f;
 }
+ 
