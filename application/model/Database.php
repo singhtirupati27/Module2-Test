@@ -349,8 +349,8 @@
       try {
         $query = $this->connectionData->prepare("SELECT * FROM books ORDER BY {$sortBy}");
         $query->execute();
-        $response = $query->fetch();
-        $this->isEmpty($response);
+        $response = $query->fetchAll();
+        return $this->isEmpty($response);
       }
       catch (PDOException $e) {
         echo $e;
@@ -361,18 +361,22 @@
     /**
      * Function to search book in database by passed parameter.
      * 
-     *  @param string $data
+     *  @param string $keyword
      *    Holds information about data to be searched.
+     * 
+     *  @param string $columnName
+     *    Holds column name to search in for data.
      * 
      *  @return mixed
      */
-    public function searchBook(string $data) {
+    public function searchBook(string $keyword, string $columnName) {
       try {
-        $query = $this->connectionData->prepare("SELECT * FROM books WHERE book_title = :title");
-        $query->bindParam(':title', $data);
+        $query = $this->connectionData->prepare("SELECT * FROM books 
+          WHERE {$columnName} LIKE :term");
+        $query->bindValue(':term', '%' . $keyword . '%');
         $query->execute();
-        $response = $query->fetch();
-        $this->isEmpty($response);
+        $response = $query->fetchAll();
+        return $this->isEmpty($response);
       }
       catch (PDOException $e) {
         echo $e;

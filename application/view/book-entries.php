@@ -50,7 +50,7 @@
             </div>
 
             <div class="form-input">
-              <input type="submit" name="add-book" id="submit-btn" value="Sign Up">
+              <input type="submit" name="add-book" id="submit-btn" value="Add Book">
             </div>
           </form>
         </div>

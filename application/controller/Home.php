@@ -66,8 +66,8 @@
           }
         }
         else {
-          $GLOBALS["emailErr"] = $this->validation->emailErr;
-          $GLOBALS["emailErr"] = $this->validation->passwordErr;
+          $GLOBALS["emailErr"] = $this->validation->errorMsg["emailErr"];
+          $GLOBALS["emailErr"] = $this->validation->errorMsg  ["passwordErr"];
         }
       }
     }
@@ -87,7 +87,7 @@
     /**
      * Function to sort books as option chosen by user.
      * 
-     * @return response
+     *  @return response
      *    It will return html page with sorted book list with pagination.
      */
     public function sortBook() {
@@ -99,12 +99,12 @@
     /**
      * Function to search book.
      * 
-     * @return response
+     *  @return response
      *    It will return html page with searched book list with pagination.
      */
     public function searchBook() {
-      $_SESSION["searchedBookData"] = $this->database->searchBook($_POST["bookQuery"]);
-      return $this->view("searchbook");
+      $_SESSION["loadBooks"] = $this->database->searchBook($_POST["searchFor"], $_POST["searchColumn"]);
+      return $this->view("booklist");
     }
 
     /**
